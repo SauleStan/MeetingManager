@@ -106,7 +106,7 @@ while (true)
             meetingController.RemovePersonFromMeeting(meetingId, name);
             break;
 
-        case 5:
+        case 5 when filterVar.Equals(null):
             Console.WriteLine("Missing filter arg.");
             break;
 
@@ -217,6 +217,7 @@ while (true)
             break;
 
         default:
+            Console.WriteLine("Invalid input");
             ListCommands();
             break;
     }
