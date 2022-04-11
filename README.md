@@ -11,5 +11,5 @@ Available commands:
 - Remove person from meeting
 - List meetings (with filters)
 
-![Commands](\assets\commands.png)
+![Commands](/assets/commands.png)
 
