@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MeetingManager.Controllers
@@ -105,7 +106,15 @@ namespace MeetingManager.Controllers
 
         public List<Meeting> FilterByDescription(string filter)
         {
-            throw new NotImplementedException();
+            List<Meeting> filteredList = new();
+            foreach (var meeting in _meetingsList)
+            {
+                if (Regex.IsMatch(meeting.Description, filter))
+                {
+                    filteredList.Add(meeting);
+                }
+            }
+            return filteredList;
         }
 
         public List<Meeting> FilterByNumberOfAttendees(int numberOfAttendees)

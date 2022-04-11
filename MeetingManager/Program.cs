@@ -9,7 +9,22 @@ static void ListCommands()
     Console.WriteLine("2 - Delete meeting");
     Console.WriteLine("3 - Add person to a meeting");
     Console.WriteLine("4 - Remove person from a meeting");
-    Console.WriteLine("5 - List all meetings");
+    Console.WriteLine("5 - List meetings [-arg]\n" +
+        "\t-a List all\n" +
+        "\t-d Filter by description\n" +
+        "\t-rp Filter by responsible person\n" +
+        "\t-c Filter by category\n" +
+        "\t-t Filter by type\n" +
+        "\t-date Filter by date\n" +
+        "\t-att Filter by attendees");
+}
+
+static void DisplayList(List<Meeting> meetings)
+{
+    foreach (var meeting in meetings)
+    {
+        Console.WriteLine(meeting);
+    }
 }
 
 ListCommands();
@@ -19,9 +34,16 @@ IMeetingController meetingController = new MeetingController();
 while (true)
 {
     int choice = 0;
+    string filterVar = "";
     try
     {
-        choice = Int32.Parse(Console.ReadLine());
+        var line = Console.ReadLine();
+        var input = line.Split(' ');
+        choice = int.Parse(input[0]);
+        if (input.Length > 1)
+        {
+            filterVar = input[1];
+        }
     }
     catch (Exception ex)
     {
@@ -70,7 +92,7 @@ while (true)
             break;
         case 4:
             break;
-        case 5:
+        case 5 when filterVar.Equals("-a"):
             var meetingList = meetingController.GetAllMeetings();
             if(meetingList.Count == 0)
             {
@@ -78,12 +100,14 @@ while (true)
             }
             else
             {
-                foreach (var meeting in meetingList)
-                {
-                    Console.WriteLine(meeting);
-                }
+                DisplayList(meetingList);                
             }
             
+            break;
+        case 5 when filterVar.Equals("-d"):
+            Console.WriteLine("Enter word or sentence to filter descriptions by:");
+            string descFilter = Console.ReadLine();
+            DisplayList(meetingController.FilterByDescription(descFilter));
             break;
         default:
             Console.WriteLine("Invalid command.");
