@@ -16,16 +16,14 @@ namespace MeetingManager.Data
             List<Meeting> meetingList = new List<Meeting>();
             try
             {
-                if (File.Exists(_fileName))
+                // If file doesn't exist, creates a new file
+                if (!File.Exists(_fileName))
                 {
-                    string jsonString = File.ReadAllText(_fileName);
-                    meetingList = JsonSerializer.Deserialize<List<Meeting>>(jsonString);
-                    return meetingList;
+                    File.Create(_fileName);             
                 }
-                else
-                {
-                    Console.WriteLine($"{_fileName} does not exist.");
-                }
+                string jsonString = File.ReadAllText(_fileName);
+                meetingList = JsonSerializer.Deserialize<List<Meeting>>(jsonString);
+                return meetingList;
             }
             catch (Exception ex)
             {

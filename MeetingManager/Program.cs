@@ -213,7 +213,7 @@ while (true)
             break;
 
         default:
-            Console.WriteLine("Invalid command.");
+            ListCommands();
             break;
     }
 
