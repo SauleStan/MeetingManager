@@ -77,6 +77,7 @@ while (true)
 
             meetingController.AddMeeting(newMeeting);
             break;
+
         case 2:
             Console.WriteLine("Enter your name:");
             string rp = Console.ReadLine();
@@ -87,6 +88,7 @@ while (true)
 
             meetingController.DeleteMeeting(meetingId, rp);
             break;
+
         case 3:
             Console.WriteLine("Enter meeting id:");
             Guid.TryParse(Console.ReadLine(), out meetingId);
@@ -97,6 +99,11 @@ while (true)
             break;
 
         case 4:
+            Console.WriteLine("Enter meeting id:");
+            Guid.TryParse(Console.ReadLine(), out meetingId);
+            Console.WriteLine("Enter the name of the person to remove from the meeting:");
+            name = Console.ReadLine();
+            meetingController.RemovePersonFromMeeting(meetingId, name);
             break;
 
         case 5 when filterVar.Equals("-a"):
@@ -109,18 +116,20 @@ while (true)
             {
                 DisplayList(meetingList);                
             }
-            
             break;
+
         case 5 when filterVar.Equals("-d"):
             Console.WriteLine("Enter word or sentence to filter descriptions by:");
             string descFilter = Console.ReadLine();
             DisplayList(meetingController.FilterByDescription(descFilter));
             break;
+
         case 5 when filterVar.Equals("-rp"):
             Console.WriteLine("Enter responsible person name:");
             rp = Console.ReadLine();
             DisplayList(meetingController.FilterByResponsiblePerson(rp));
             break;
+
         case 5 when filterVar.Equals("-c"):
             Console.WriteLine("Enter category to filter by (CodeMonkey / Hub / Short / TeamBuilding):");
             try
@@ -133,6 +142,7 @@ while (true)
                 Console.WriteLine("Invalid category, please select one from the brackets.");
             }
             break;
+
         case 5 when filterVar.Equals("-t"):
             Console.WriteLine("Enter category to filter by (Live / InPerson):");
             try
@@ -145,6 +155,7 @@ while (true)
                 Console.WriteLine("Invalid type, please select one from the brackets.");
             }
             break;
+
         case 5 when filterVar.Equals("-date"):
             DateTime dateFilter1 = new();
             DateTime? dateFilter2 = null;
@@ -186,8 +197,8 @@ while (true)
                     Console.WriteLine("Invalid date format.");
                 }
             }
-
             break;
+
         case 5 when filterVar.Equals("-att"):
             Console.WriteLine("Enter the number of attendees to filter by (will return meetings with that amount or more people):");
             try
