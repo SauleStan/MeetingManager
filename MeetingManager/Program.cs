@@ -126,6 +126,18 @@ while (true)
                 Console.WriteLine("Invalid category, please select one from the brackets.");
             }
             break;
+        case 5 when filterVar.Equals("-t"):
+            Console.WriteLine("Enter category to filter by (Live / InPerson):");
+            try
+            {
+                Types typeFilter = Enum.Parse<Types>(Console.ReadLine());
+                DisplayList(meetingController.FilterByType(typeFilter));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Invalid type, please select one from the brackets.");
+            }
+            break;
         default:
             Console.WriteLine("Invalid command.");
             break;

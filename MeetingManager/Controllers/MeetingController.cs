@@ -129,7 +129,7 @@ namespace MeetingManager.Controllers
 
         public List<Meeting> FilterByType(Types type)
         {
-            throw new NotImplementedException();
+            return _meetingsList.FindAll(x => x.Type == type);
         }
 
         public List<Meeting> GetAllMeetings()
