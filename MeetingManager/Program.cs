@@ -109,6 +109,11 @@ while (true)
             string descFilter = Console.ReadLine();
             DisplayList(meetingController.FilterByDescription(descFilter));
             break;
+        case 5 when filterVar.Equals("-rp"):
+            Console.WriteLine("Enter responsible person name:");
+            rp = Console.ReadLine();
+            DisplayList(meetingController.FilterByResponsiblePerson(rp));
+            break;
         default:
             Console.WriteLine("Invalid command.");
             break;

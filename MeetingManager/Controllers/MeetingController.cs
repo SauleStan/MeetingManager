@@ -124,7 +124,7 @@ namespace MeetingManager.Controllers
 
         public List<Meeting> FilterByResponsiblePerson(string responsiblePerson)
         {
-            throw new NotImplementedException();
+            return _meetingsList.FindAll(x => x.ResponsiblePerson == responsiblePerson);
         }
 
         public List<Meeting> FilterByType(Types type)
