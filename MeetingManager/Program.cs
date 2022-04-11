@@ -27,6 +27,12 @@ static void DisplayList(List<Meeting> meetings)
     }
 }
 
+static string[] ParseInput()
+{
+    var line = Console.ReadLine();
+    return line.Split(' ');
+}
+
 ListCommands();
 
 IMeetingController meetingController = new MeetingController();
@@ -37,8 +43,7 @@ while (true)
     string filterVar = "";
     try
     {
-        var line = Console.ReadLine();
-        var input = line.Split(' ');
+        var input = ParseInput();
         choice = int.Parse(input[0]);
         if (input.Length > 1)
         {
@@ -137,6 +142,49 @@ while (true)
             {
                 Console.WriteLine("Invalid type, please select one from the brackets.");
             }
+            break;
+        case 5 when filterVar.Equals("-date"):
+            DateTime dateFilter1 = new();
+            DateTime? dateFilter2 = null;
+
+            Console.WriteLine("Enter date to filter by (format: yyyy-mm-dd or yyyy-mm-dd yyyy-mm-dd for date range)");
+            var input = ParseInput();
+            try
+            {
+                if (input.Length > 1)
+                {
+                    dateFilter1 = DateTime.Parse(input[0]);
+                    dateFilter2 = DateTime.Parse(input[1]);
+                }
+                else
+                {
+                    DateTime.TryParse(input[0], out dateFilter1);
+                }
+            }
+            catch (FormatException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            finally
+            {
+                if (dateFilter1 != DateTime.MinValue)
+                {
+                    var filteredList = meetingController.FilterByDate(dateFilter1, dateFilter2);
+                    if (filteredList.Count > 0)
+                    {
+                        DisplayList(filteredList);
+                    }
+                    else
+                    {
+                        Console.WriteLine("No meetings found.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid date format.");
+                }
+            }
+
             break;
         default:
             Console.WriteLine("Invalid command.");

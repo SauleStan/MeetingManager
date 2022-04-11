@@ -101,7 +101,8 @@ namespace MeetingManager.Controllers
 
         public List<Meeting> FilterByDate(DateTime startDate, DateTime? endDate = null)
         {
-            throw new NotImplementedException();
+            return _meetingsList.FindAll(x => x.StartDate.Date == startDate ||
+            x.StartDate.Date >= startDate && x.StartDate.Date <= endDate);
         }
 
         public List<Meeting> FilterByDescription(string filter)
