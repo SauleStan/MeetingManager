@@ -106,6 +106,10 @@ while (true)
             meetingController.RemovePersonFromMeeting(meetingId, name);
             break;
 
+        case 5:
+            Console.WriteLine("Missing filter arg.");
+            break;
+
         case 5 when filterVar.Equals("-a"):
             var meetingList = meetingController.GetAllMeetings();
             if(meetingList.Count == 0)
