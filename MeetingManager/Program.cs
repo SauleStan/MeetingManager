@@ -71,4 +71,7 @@ while (true)
             Console.WriteLine("Invalid command.");
             break;
     }
+
+    // Store app data in json file
+    meetingController.SaveAppData();
 }

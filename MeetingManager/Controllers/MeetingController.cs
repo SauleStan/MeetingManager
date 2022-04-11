@@ -1,4 +1,5 @@
-﻿using MeetingManager.Models;
+﻿using MeetingManager.Data;
+using MeetingManager.Models;
 using MeetingManager.Utils;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,11 @@ namespace MeetingManager.Controllers
     public class MeetingController : IMeetingController
     {
         private List<Meeting> _meetingsList;
+        private DataAccess _dataAccess;
         public MeetingController()
         {
-            _meetingsList = new List<Meeting>();
+            _dataAccess = new DataAccess();
+            _meetingsList = _dataAccess.GetData<Meeting>();
         }
         public void AddMeeting(Meeting meeting)
         {
@@ -77,7 +80,7 @@ namespace MeetingManager.Controllers
 
         public void SaveAppData()
         {
-            throw new NotImplementedException();
+            _dataAccess.SaveData(_meetingsList);
         }
     }
 }
