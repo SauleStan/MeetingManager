@@ -68,7 +68,7 @@ namespace MeetingManager.Controllers
         /// <summary>
         /// This method deletes a meeting from meetings list
         /// </summary>
-        /// <param name="id">Id of the method that you want to delete</param>
+        /// <param name="id">Id of the meeting that you want to delete</param>
         /// <param name="user">Name of the person who is performing the command</param>
         public void DeleteMeeting(Guid id, string user)
         {
@@ -133,10 +133,32 @@ namespace MeetingManager.Controllers
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// This method removes a person from a meeting if the person is part of the meeting
+        /// </summary>
+        /// <param name="meetingId">Id of the meeting from which the person should be removed</param>
+        /// <param name="personName">Name of the person to be removed</param>
         public void RemovePersonFromMeeting(Guid meetingId, string personName)
         {
-            throw new NotImplementedException();
+            var meeting = _meetingsList.FirstOrDefault(x => x.Id == meetingId);
+            if (meeting is not null)
+            {
+                if (meeting.People.Contains(personName))
+                {
+                    meeting.People.Remove(personName);
+                    Console.WriteLine($"Removed {personName} from the meeting.");
+                }
+                else
+                {
+                    Console.WriteLine($"{personName} is not in the meeting attendees list.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("No such meeting exists.");
+            }
         }
+
         /// <summary>
         /// This method stores meetings list in a json file
         /// </summary>

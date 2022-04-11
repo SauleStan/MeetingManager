@@ -178,6 +178,43 @@ namespace MeetingManagerTests
             // Assert
             Assert.IsFalse(newMeeting2.People.Contains(personToAdd));
         }
+        [TestMethod]
+        public void RemovePersonFromMeetingTest()
+        {
+            // First meeting
+            DateTime startDate = new DateTime(2022, 1, 1, 10, 0, 0);
+            DateTime endDate = new DateTime(2022, 1, 1, 13, 0, 0);
 
+            Meeting newMeeting1 = new Meeting("Meeting1", "Andy",
+                "Andy's meeting", Categories.Hub, Types.Live, startDate, endDate);
+            IMeetingController meetingController = new MeetingController();
+
+            // Act
+            meetingController.AddMeeting(newMeeting1);
+            string person = "Charlie";
+            meetingController.AddPersonToMeeting(newMeeting1.Id, person);
+            meetingController.RemovePersonFromMeeting(newMeeting1.Id, person);
+            // Assert
+            Assert.IsFalse(newMeeting1.People.Contains(person));
+        }
+        [TestMethod]
+        public void RemovePersonFromMeetingWrongNameTest()
+        {
+            // First meeting
+            DateTime startDate = new DateTime(2022, 1, 1, 10, 0, 0);
+            DateTime endDate = new DateTime(2022, 1, 1, 13, 0, 0);
+
+            Meeting newMeeting1 = new Meeting("Meeting1", "Andy",
+                "Andy's meeting", Categories.Hub, Types.Live, startDate, endDate);
+            IMeetingController meetingController = new MeetingController();
+
+            // Act
+            meetingController.AddMeeting(newMeeting1);
+            string person = "Charlie";
+            meetingController.AddPersonToMeeting(newMeeting1.Id, person);
+            meetingController.RemovePersonFromMeeting(newMeeting1.Id, "jsdksghd");
+            // Assert
+            Assert.IsTrue(newMeeting1.People.Contains(person));
+        }
     }
 }

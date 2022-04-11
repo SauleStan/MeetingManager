@@ -41,8 +41,12 @@ while (true)
             Enum.TryParse(Console.ReadLine(), out Categories category);
             Console.WriteLine("Type(Live / InPerson): ");
             Enum.TryParse(Console.ReadLine(), out Types type);
+            Console.WriteLine("Enter start date (format: yyyy-mm-dd hh:mm):");
+            DateTime.TryParse(Console.ReadLine(), out DateTime startDate);
+            Console.WriteLine("Enter end date (format: yyyy-mm-dd hh:mm):");
+            DateTime.TryParse(Console.ReadLine(), out DateTime endDate);
 
-            Meeting newMeeting = new(meetingName, responsiblePerson, description, category, type, DateTime.UtcNow, DateTime.UtcNow);
+            Meeting newMeeting = new(meetingName, responsiblePerson, description, category, type, startDate, endDate);
 
             meetingController.AddMeeting(newMeeting);
             break;
