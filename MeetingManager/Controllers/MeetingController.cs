@@ -18,6 +18,10 @@ namespace MeetingManager.Controllers
             _dataAccess = new DataAccess();
             _meetingsList = _dataAccess.GetData<Meeting>();
         }
+        /// <summary>
+        /// This method adds given meeting to the meeting list
+        /// </summary>
+        /// <param name="meeting">Meeting to be added to the meetings list</param>
         public void AddMeeting(Meeting meeting)
         {
             _meetingsList.Add(meeting);
@@ -99,7 +103,9 @@ namespace MeetingManager.Controllers
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// This method stores meetings list in a json file
+        /// </summary>
         public void SaveAppData()
         {
             _dataAccess.SaveData(_meetingsList);
