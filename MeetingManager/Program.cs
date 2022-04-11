@@ -1,4 +1,6 @@
 ﻿using MeetingManager.Controllers;
+using MeetingManager.Models;
+using MeetingManager.Utils;
 
 static void ListCommands()
 {
@@ -29,6 +31,20 @@ while (true)
     switch (choice)
     {
         case 1:
+            Console.WriteLine("Meeting name: ");
+            string name = Console.ReadLine();
+            Console.WriteLine("Responsible person: ");
+            string responsiblePerson = Console.ReadLine();
+            Console.WriteLine("Description: ");
+            string description = Console.ReadLine();
+            Console.WriteLine("Category(CodeMonkey / Hub / Short / TeamBuilding): ");
+            Enum.TryParse(Console.ReadLine(), out Categories category);
+            Console.WriteLine("Type(Live / InPerson): ");
+            Enum.TryParse(Console.ReadLine(), out Types type);
+
+            Meeting newMeeting = new(name, responsiblePerson, description, category, type, DateTime.UtcNow, DateTime.UtcNow);
+
+            meetingController.AddMeeting(newMeeting);
             break;
         case 2:
             break;
