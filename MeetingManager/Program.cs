@@ -95,8 +95,10 @@ while (true)
 
             meetingController.AddPersonToMeeting(meetingId, name);
             break;
+
         case 4:
             break;
+
         case 5 when filterVar.Equals("-a"):
             var meetingList = meetingController.GetAllMeetings();
             if(meetingList.Count == 0)
@@ -186,6 +188,19 @@ while (true)
             }
 
             break;
+        case 5 when filterVar.Equals("-att"):
+            Console.WriteLine("Enter the number of attendees to filter by (will return meetings with that amount or more people):");
+            try
+            {
+                int peopleFilter = Int32.Parse(Console.ReadLine());
+                DisplayList(meetingController.FilterByNumberOfAttendees(peopleFilter));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            break;
+
         default:
             Console.WriteLine("Invalid command.");
             break;

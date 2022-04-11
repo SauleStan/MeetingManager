@@ -120,7 +120,7 @@ namespace MeetingManager.Controllers
 
         public List<Meeting> FilterByNumberOfAttendees(int numberOfAttendees)
         {
-            throw new NotImplementedException();
+            return _meetingsList.FindAll(x => x.People.Count >= numberOfAttendees);
         }
 
         public List<Meeting> FilterByResponsiblePerson(string responsiblePerson)
