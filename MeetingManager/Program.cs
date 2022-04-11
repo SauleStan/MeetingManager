@@ -17,6 +17,14 @@ IMeetingController meetingController = new MeetingController();
 while (true)
 {
     int choice = 0;
+    try
+    {
+        choice = Int32.Parse(Console.ReadLine());
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
 
     switch (choice)
     {
@@ -29,6 +37,19 @@ while (true)
         case 4:
             break;
         case 5:
+            var meetingList = meetingController.GetAllMeetings();
+            if(meetingList.Count == 0)
+            {
+                Console.WriteLine("There are no meetings.");
+            }
+            else
+            {
+                foreach (var meeting in meetingList)
+                {
+                    Console.WriteLine(meeting);
+                }
+            }
+            
             break;
         default:
             Console.WriteLine("Invalid command.");

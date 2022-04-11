@@ -26,6 +26,20 @@ namespace MeetingManager.Models
             this.EndDate = EndDate;
             People = new List<string>();
         }
+        public override string ToString()
+        {
+            string peopleString = String.Join(", ", People);
 
+            return
+                $"ID: {Id}\n" +
+                $"Name: {Name}\n" +
+                $"ResponsiblePerson: {ResponsiblePerson}\n" +
+                $"Description: {Description}\n" +
+                $"Category: {Category}\n" +
+                $"Type: {Type}\n" +
+                $"StartDate: {StartDate}\n" +
+                $"EndDate: {EndDate}\n" +
+                $"People: {peopleString}\n";
+        }
     }
 }
