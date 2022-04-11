@@ -83,5 +83,101 @@ namespace MeetingManagerTests
             var result = meetingController.GetAllMeetings();
             Assert.IsTrue(result.Contains(meeting1));
         }
+        [TestMethod]
+        public void AddPersonToMeetingTest()
+        {
+            // First meeting
+            DateTime startDate = new DateTime(2022, 1, 1, 10, 0, 0);
+            DateTime endDate = new DateTime(2022, 1, 1, 13, 0, 0);
+
+            Meeting newMeeting1 = new Meeting("Meeting1", "Andy",
+                "Andy's meeting", Categories.Hub, Types.Live, startDate, endDate);
+            IMeetingController meetingController = new MeetingController();
+
+            // Act
+            meetingController.AddMeeting(newMeeting1);
+            string personToAdd = "Charlie";
+            meetingController.AddPersonToMeeting(newMeeting1.Id, personToAdd);
+
+            // Assert
+            Assert.IsTrue(newMeeting1.People.Contains(personToAdd));
+        }
+        [TestMethod]
+        public void AddPersonToMeetingTwiceTest()
+        {
+            // First meeting
+            DateTime startDate = new DateTime(2022, 1, 1, 10, 0, 0);
+            DateTime endDate = new DateTime(2022, 1, 1, 13, 0, 0);
+
+            Meeting newMeeting1 = new Meeting("Meeting1", "Andy", "Andy's meeting",
+                Categories.Hub, Types.Live, startDate, endDate);
+            
+            IMeetingController meetingController = new MeetingController();
+
+            // Act
+            meetingController.AddMeeting(newMeeting1);
+            string personToAdd = "Charlie";
+            meetingController.AddPersonToMeeting(newMeeting1.Id, personToAdd);
+            meetingController.AddPersonToMeeting(newMeeting1.Id, personToAdd);
+
+            // Assert
+            var result = newMeeting1.People.FindAll(x => x.Equals(personToAdd)).Count;
+            Assert.AreEqual(1, result);
+        }
+        [TestMethod]
+        public void AddPersonToMeetingOverlapingTimeRangeTest()
+        {
+            // First meeting
+            DateTime startDate = new DateTime(2022, 1, 1, 10, 0, 0);
+            DateTime endDate = new DateTime(2022, 1, 1, 13, 0, 0);
+
+            // Second meeting
+            DateTime startDate2 = new DateTime(2022, 1, 1, 11, 0, 0);
+            DateTime endDate2 = new DateTime(2022, 1, 1, 14, 0, 0);
+
+            Meeting newMeeting1 = new Meeting("Meeting1", "Andy", "Andy's meeting",
+                Categories.Hub, Types.Live, startDate, endDate);
+            Meeting newMeeting2 = new Meeting("Meeting2", "Alex", "Alex's meeting",
+                Categories.Hub, Types.InPerson, startDate2, endDate2);
+            IMeetingController meetingController = new MeetingController();
+
+            // Act
+            meetingController.AddMeeting(newMeeting1);
+            meetingController.AddMeeting(newMeeting2);
+            string personToAdd = "Charlie";
+            meetingController.AddPersonToMeeting(newMeeting1.Id, personToAdd);
+            meetingController.AddPersonToMeeting(newMeeting2.Id, personToAdd);
+
+            // Assert
+            Assert.IsFalse(newMeeting2.People.Contains(personToAdd));
+        }
+        [TestMethod]
+        public void AddPersonToMeetingSameTimeTest()
+        {
+            // First meeting
+            DateTime startDate = new DateTime(2022, 1, 1, 10, 0, 0);
+            DateTime endDate = new DateTime(2022, 1, 1, 13, 0, 0);
+
+            // Second meeting
+            DateTime startDate2 = new DateTime(2022, 1, 1, 10, 0, 0);
+            DateTime endDate2 = new DateTime(2022, 1, 1, 13, 0, 0);
+
+            Meeting newMeeting1 = new Meeting("Meeting1", "Andy", "Andy's meeting",
+                Categories.Hub, Types.Live, startDate, endDate);
+            Meeting newMeeting2 = new Meeting("Meeting2", "Alex", "Alex's meeting",
+                Categories.Hub, Types.InPerson, startDate2, endDate2);
+            IMeetingController meetingController = new MeetingController();
+
+            // Act
+            meetingController.AddMeeting(newMeeting1);
+            meetingController.AddMeeting(newMeeting2);
+            string personToAdd = "Charlie";
+            meetingController.AddPersonToMeeting(newMeeting1.Id, personToAdd);
+            meetingController.AddPersonToMeeting(newMeeting2.Id, personToAdd);
+
+            // Assert
+            Assert.IsFalse(newMeeting2.People.Contains(personToAdd));
+        }
+
     }
 }

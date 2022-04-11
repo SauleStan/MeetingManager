@@ -32,7 +32,7 @@ while (true)
     {
         case 1:
             Console.WriteLine("Meeting name: ");
-            string name = Console.ReadLine();
+            string meetingName = Console.ReadLine();
             Console.WriteLine("Responsible person: ");
             string responsiblePerson = Console.ReadLine();
             Console.WriteLine("Description: ");
@@ -42,7 +42,7 @@ while (true)
             Console.WriteLine("Type(Live / InPerson): ");
             Enum.TryParse(Console.ReadLine(), out Types type);
 
-            Meeting newMeeting = new(name, responsiblePerson, description, category, type, DateTime.UtcNow, DateTime.UtcNow);
+            Meeting newMeeting = new(meetingName, responsiblePerson, description, category, type, DateTime.UtcNow, DateTime.UtcNow);
 
             meetingController.AddMeeting(newMeeting);
             break;
@@ -57,6 +57,12 @@ while (true)
             meetingController.DeleteMeeting(meetingId, rp);
             break;
         case 3:
+            Console.WriteLine("Enter meeting id:");
+            Guid.TryParse(Console.ReadLine(), out meetingId);
+            Console.WriteLine("Enter the name of the person to add to the meeting:");
+            var name = Console.ReadLine();
+
+            meetingController.AddPersonToMeeting(meetingId, name);
             break;
         case 4:
             break;

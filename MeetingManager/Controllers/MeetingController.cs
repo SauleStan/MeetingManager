@@ -26,10 +26,44 @@ namespace MeetingManager.Controllers
         {
             _meetingsList.Add(meeting);
         }
-
+        /// <summary>
+        /// This method adds a person to the meeting if the person does not 
+        /// have another meeting at the same time or is not already part of the meeting attendees
+        /// </summary>
+        /// <param name="meetingId">Id of the meeting where the person should be added</param>
+        /// <param name="personName">Name of the person to be added to the meeting's attendee list</param>
         public void AddPersonToMeeting(Guid meetingId, string personName)
         {
-            throw new NotImplementedException();
+            var meeting = _meetingsList.FirstOrDefault(x => x.Id == meetingId);
+
+            if (meeting is not null)
+            {
+                if (!meeting.People.Contains(personName))
+                {
+                    bool intersects = _meetingsList.Any(x =>
+                        x.People.Contains(personName) &&
+                        ((x.StartDate >= meeting.StartDate && x.StartDate <= meeting.EndDate) ||
+                        (x.EndDate >= meeting.StartDate && x.EndDate <= meeting.EndDate))
+                        );
+                    if (intersects)
+                    {
+                        Console.WriteLine($"{personName} is booked for another meeting at that time.");
+                    }
+                    else
+                    {
+                        meeting.People.Add(personName);
+                        Console.WriteLine($"{personName} has been added to the meeting.\n");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"{personName} is already in the meeting attendees list.\n");
+                }
+            }
+            else
+            {
+                Console.WriteLine("No such meeting exists.");
+            }
         }
         /// <summary>
         /// This method deletes a meeting from meetings list
