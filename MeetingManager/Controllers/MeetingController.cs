@@ -96,7 +96,7 @@ namespace MeetingManager.Controllers
 
         public List<Meeting> FilterByCategory(Categories category)
         {
-            throw new NotImplementedException();
+            return _meetingsList.FindAll(x => x.Category == category);
         }
 
         public List<Meeting> FilterByDate(DateTime startDate, DateTime? endDate = null)

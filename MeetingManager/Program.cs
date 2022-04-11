@@ -114,6 +114,18 @@ while (true)
             rp = Console.ReadLine();
             DisplayList(meetingController.FilterByResponsiblePerson(rp));
             break;
+        case 5 when filterVar.Equals("-c"):
+            Console.WriteLine("Enter category to filter by (CodeMonkey / Hub / Short / TeamBuilding):");
+            try
+            {
+                Categories categoryFilter = Enum.Parse<Categories>(Console.ReadLine());
+                DisplayList(meetingController.FilterByCategory(categoryFilter));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Invalid category, please select one from the brackets.");
+            }
+            break;
         default:
             Console.WriteLine("Invalid command.");
             break;
