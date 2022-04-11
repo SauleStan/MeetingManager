@@ -47,6 +47,14 @@ while (true)
             meetingController.AddMeeting(newMeeting);
             break;
         case 2:
+            Console.WriteLine("Enter your name:");
+            string rp = Console.ReadLine();
+
+            Console.WriteLine("Enter meeting id: ");
+            Guid meetingId;
+            Guid.TryParse(Console.ReadLine(), out meetingId);
+
+            meetingController.DeleteMeeting(meetingId, rp);
             break;
         case 3:
             break;

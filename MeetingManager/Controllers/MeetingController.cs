@@ -27,10 +27,32 @@ namespace MeetingManager.Controllers
         {
             throw new NotImplementedException();
         }
-
-        public void DeleteMeeting(Guid id, string username)
+        /// <summary>
+        /// This method deletes a meeting from meetings list
+        /// </summary>
+        /// <param name="id">Id of the method that you want to delete</param>
+        /// <param name="user">Name of the person who is performing the command</param>
+        public void DeleteMeeting(Guid id, string user)
         {
-            throw new NotImplementedException();
+            Meeting meetingToRemove;
+            try
+            {
+                meetingToRemove = _meetingsList.Single(x => x.Id == id);
+                if (meetingToRemove.ResponsiblePerson.Equals(user))
+                {
+                    _meetingsList.Remove(meetingToRemove);
+                    Console.WriteLine("Meeting has been deleted.");
+                }
+                else
+                {
+                    Console.WriteLine("{0} is not the responsible person for this meeting.", user);
+                    Console.WriteLine("Only the responsible person for the meeting can remove the meeting.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Meeting with ID:{0} does not exist.", id);
+            }
         }
 
         public List<Meeting> FilterByCategory(Categories category)

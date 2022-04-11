@@ -12,7 +12,7 @@ namespace MeetingManager.Controllers
     {
         void AddMeeting(Meeting meeting);
         void AddPersonToMeeting(Guid meetingId, string personName);
-        void DeleteMeeting(Guid id, string username);
+        void DeleteMeeting(Guid id, string user);
         List<Meeting> FilterByCategory(Categories category);
         List<Meeting> FilterByDate(DateTime startDate, DateTime? endDate = null);
         List<Meeting> FilterByDescription(string filter);
